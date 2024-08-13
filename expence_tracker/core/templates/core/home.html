@@ -1,0 +1,124 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="user-detail p-5">
+  <h2 class="text-2xl font-bold mb-4">User Details</h2>
+  
+  <!-- User Information Table -->
+  <table class="min-w-full bg-gray-800 text-gray-100 rounded-lg overflow-hidden">
+    <tbody>
+      <tr>
+        <td class="px-4 py-2 font-semibold">Username:</td>
+        <td class="px-4 py-2">{{ user.username }}</td>
+      </tr>
+      <tr>
+        <td class="px-4 py-2 font-semibold">Email:</td>
+        <td class="px-4 py-2">{{ user.email }}</td>
+      </tr>
+      {% if user.first_name or user.last_name %}
+      <tr>
+        <td class="px-4 py-2 font-semibold">Name:</td>
+        <td class="px-4 py-2">{{ user.first_name }} {{ user.last_name }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <br /><br />
+  
+  <!-- Expenses Table -->
+  <h3 class="text-xl font-bold mb-2">Expenses</h3>
+  <table class="min-w-full bg-gray-700 text-gray-100 rounded-lg overflow-hidden">
+    <thead class="bg-gray-800">
+      <tr>
+        <th class="px-4 py-2 text-left">Category</th>
+        <th class="px-4 py-2 text-left">Name</th>
+        <th class="px-4 py-2 text-left">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if expense %}
+        {% for exp in expense %}
+        <tr>
+          <td class="px-4 py-2 capitalize">{{ exp.category }}</td>
+          <td class="px-4 py-2 capitalize">{{ exp.name }}</td>
+          <td class="px-4 py-2">${{ exp.amount }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="2" class="px-4 py-2 text-center">No expenses found.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <br /><br />
+
+  <!-- Income Table -->
+  <h3 class="text-xl font-bold mb-2">Income</h3>
+  <table class="min-w-full bg-gray-700 text-gray-100 rounded-lg overflow-hidden">
+    <thead class="bg-gray-800">
+      <tr>
+        <th class="px-4 py-2 text-left">Category</th>
+        <th class="px-4 py-2 text-left">Name</th>
+        <th class="px-4 py-2 text-left">Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if income %}
+        {% for inc in income %}
+        <tr>
+          <td class="px-4 py-2 capitalize">{{ inc.category }}</td>
+          <td class="px-4 py-2 capitalize">{{ inc.name }}</td>
+
+          <td class="px-4 py-2">${{ inc.amount }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="2" class="px-4 py-2 text-center">No income found.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <br /><br />
+
+  <!-- Expense Summary Table -->
+  <h3 class="text-xl font-bold mb-2">Expense Summary</h3>
+  <table class="min-w-full bg-gray-700 text-gray-100 rounded-lg overflow-hidden">
+    <tbody>
+      {% if expense_summary %}
+        {% for summary in expense_summary %}
+        <tr>
+          <td class="px-4 py-2 capitalize">{{summary.category}}</td>
+          <td class="px-4 py-2">${{ summary.total_expenses }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="2" class="px-4 py-2 text-center">No expense summary available.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <br /><br />
+
+  <!-- Income Summary Table -->
+  <h3 class="text-xl font-bold mb-2">Income Summary</h3>
+  <table class="min-w-full bg-gray-700 text-gray-100 rounded-lg overflow-hidden">
+    <tbody>
+      {% if income_summary %}
+      {% for income in income_summary %}
+      <tr>
+        <td class="px-4 py-2 font-semibold capitalize">{{income.category}}</td>
+        <td class="px-4 py-2">${{ income.total_income }}</td>
+      </tr>
+      {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

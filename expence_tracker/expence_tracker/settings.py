@@ -39,10 +39,17 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 external_apps=[
-    'core',]
+    'core',
+    'login',
+    
+    
+    
+    ]
 
 
 INSTALLED_APPS=external_apps+INSTALLED_APPS
+
+LOGOUT_REDIRECT_URL = '/login/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -53,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
 
 ROOT_URLCONF = 'expence_tracker.urls'
 

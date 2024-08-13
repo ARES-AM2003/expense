@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            100: '#e0e0e0',
+                            200: '#b6b6b6',
+                            300: '#8b8b8b',
+                            400: '#616161',
+                            500: '#363636',
+                            600: '#2d2d2d',
+                            700: '#252525',
+                            800: '#1c1c1c',
+                            900: '#131313',
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-dark-700 text-dark-100">
+    <div class="container mx-auto md:mt-[25%] lg:mt-[15%]">
+        <div class="max-w-md mx-auto">
+            <div class="bg-dark-600 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <h3 class="text-2xl font-bold mb-6 text-center text-dark-100">Login</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label class="block text-dark-200 text-sm font-bold mb-2" for="username">
+                            Username
+                        </label>
+                        <input class="shadow appearance-none border border-dark-400 rounded w-full py-2 px-3 text-dark-200 bg-dark-500 leading-tight focus:outline-none focus:shadow-outline" id="username" name="username" type="text" required>
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-dark-200 text-sm font-bold mb-2" for="password">
+                            Password
+                        </label>
+                        <input class="shadow appearance-none border border-dark-400 rounded w-full py-2 px-3 text-dark-200 bg-dark-500 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" name="password" type="password" required>
+                    </div>
+                    {% if error %}
+                    <div class="bg-red-500 text-dark-100 p-2 rounded mb-4">{{ error }}</div>
+                    {% endif %}
+                    <div class="flex items-center justify-between mb-4">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-dark-100 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="submit">
+                            Login
+                        </button>
+                    </div>
+                </form>
+                <p class="text-center text-dark-300 text-sm">
+                    Not registered? <a href="{% url 'register' %}" class="text-blue-400 hover:text-blue-300">Create an account</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

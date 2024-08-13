@@ -16,9 +16,24 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from core.views import home
+from core.views import *
+from login.views import Login,register,Logout
+from django.contrib.auth.views import LogoutView
+
+app_name = 'core'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home, name='home'),
+    path('login/', Login, name='login'),
+    path('register/', register, name='register'),
+    path('expense/', expense, name='expense'),
+    path('income/', income, name='income'),
+    path('logout/', Logout, name='logout'),
+    path('update_expense/<int:expense_id>/', update_expense, name='update_expense'),
+    path('delete_expense/<int:expense_id>/', delete_expense, name='delete_expense'),
+    path('delete_income/<int:incom_id>/', delete_income, name='delete_income'),
+    path('update_income/<int:incom_id>/', update_income, name='update_income'),
+    path('expense_summary/', expense_summary, name='expense_summary'),
+    path('income_summary/', income_summary, name='income_summary'),
 ]

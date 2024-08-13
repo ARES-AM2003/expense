@@ -4,41 +4,109 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Expense_tracker</title>
+  <title>Expense Tracker</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Custom styles for modern effects */
+    .shadow-md {
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .hover\:shadow-lg:hover {
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    }
+    .transition-transform {
+      transition: transform 0.3s ease;
+    }
+    .hover\:scale-105:hover {
+      transform: scale(1.05);
+    }
+    .sidebar-hidden {
+      display: none;
+    }
+    .sidebar-visible {
+      display: block;
+    }
+  </style>
 </head>
 
-<body class="bg-zinc-800">
-  <div
-    class="mx-auto w-full md:w-[80%] h-screen rounded-xl bg-zinc-500 backdrop-blur-md backdrop-filter-none backdrop-opacity-30 mt-2 mb-5">
-    <div class="flex h-full">
-      <div class="w-full h-20 mt-120 md:w-1/3 lg:w-1/4 md:h-full bg-stone-400 rounded-xl md:rounded-l-xl mx-5 md:mx-0">
-        <!-- Add navigation items here -->
-        <div class="logo px-5 space-x-[75%] mt-5 md:mt-10 flex w-full items-center justify-center">
-          <h1>rochak</h1>
-          <i class="block fa md:hidden fa-user text-2xl text-white"></i>
+<body class="bg-gray-900 text-gray-200 font-sans antialiased">
+  <div class="flex min-h-screen ">
+    <!-- Sidebar -->
+    <aside id="left" class="w-64 bg-gray-800 text-gray-200 p-6 hidden md:flex flex-col shadow-md md:sidebar-visible sidebar-hidden transition-transform md:transform-none md:translate-x-0 fixed inset-y-0 left-0 z-30 md:relative">
+      <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-bold tracking-tight">Expense Tracker</h1>
+        <button id="sidebar_close" class=" md:hidden text-3xl hover:text-gray-400 transition-transform hover:scale-105">
+          <i class="fas fa-close"></i>
+          
+        </button>
+      </div>
+      <nav class="flex-grow space-y-4">
+        <a href="{% url 'home' %}" class="block py-3 px-4 rounded-lg text-lg font-medium bg-gray-700 hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105">Home</a>
+        <a href="{% url 'expense' %}" class="block py-3 px-4 rounded-lg text-lg font-medium bg-gray-700 hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105">Expense</a>
+        <a href="{% url 'income' %}" class="block py-3 px-4 rounded-lg text-lg font-medium bg-gray-700 hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105">Income</a>
+        <div class="mt-auto pt-4 border-t space-y-4 border-gray-600">
+          <h2 class="text-lg font-semibold mb-2">Summary</h2>
+          <a href="{% url 'expense_summary' %}" class="block py-3 px-4 rounded-lg text-lg font-medium bg-gray-700 hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105">Expense Summary</a>
+          <a href="{% url 'income_summary' %}" class="block py-3 px-4 rounded-lg text-lg font-medium bg-gray-700 hover:bg-gray-600 transition duration-300 ease-in-out transform hover:scale-105">Income Summary</a>
         </div>
-        <div class="md:mt-[45%] hidden gap-x-5 md:flex  w-full md:flex-col items-center justify-center">
-          <div class=" flex py-6 items-center justify-center"><a href="#">Expense</a></div>
-          <div class=" flex py-6 items-center justify-center"><a href="#">Income</a></div>
-          <div class=" flex py-6 items-center justify-center"><a href="#">Expense Summary</a></div>
-          <div class=" flex py-6 items-center justify-center"><a href="#">Income Summary</a></div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 w-full flex flex-col  md:ml-0 transition-transform md:transform-none md:translate-x-0" id="mainContent">
+      <header class="bg-gray-850 text-gray-100 pr-8 p-6 flex justify-between items-center shadow-md border-b border-gray-700">
+        <div class="flex-1">
+          <button id="sidebar_expand" class="md:hidden text-3xl hover:text-gray-400 transition-transform hover:scale-105">
+            <i class="fas fa-bars"></i>
+            
+          </button>
+          
+          <!-- You can add additional content or leave it empty for spacing -->
         </div>
-      </div>
-      <div class="icons hidden md:flex w-full gap-x-5 h-20 bg-[#075985] rounded-r-xl items-center justify-end pr-8">
-        <!-- {if session.logged_in:} -->
-        <i class="fa fa-sign-out text-2xl text-white"></i>
-        <i class="fa fa-user text-2xl text-white"></i>
-        <!-- {endif} -->
-      </div>
-      <div class=" absolute p-5 w-[80%] top-[15%] left-[10%] md:left-[30%] lg:left-[26%] md:top-[15%] md:block md:w-[60%] h-3/4 bg-zinc-600">
-        {% block content %}
-        {% endblock %}
-      </div>
+        <div class="flex items-center space-x-4 ">
+          {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="text-gray-300 hover:text-gray-100 transition-transform hover:scale-105">
+            <i class="fas fa-sign-out-alt text-2xl"></i>
+          </a>
+          <i class="fas fa-user-circle text-2xl text-gray-300 hover:text-gray-100 transition-transform hover:scale-105"></i>
+          {% else %}
+          <a href="{% url 'login' %}" class="text-lg font-medium text-gray-300 hover:text-gray-100 transition-transform hover:scale-105">
+            Login
+          </a>
+          {% endif %}
+        </div>
+      </header>
       
+      <main class="flex-1 p-6">
+        <!-- Main content cards -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Example Card -->
+          {% block content %}
+          {% endblock %}
+          <!-- Repeat Card as needed -->
+        </div>
+      </main>
     </div>
   </div>
+
+  <script>
+    // JavaScript to toggle the sidebar visibility on mobile screens
+    document.getElementById('sidebar_expand').addEventListener('click', function() {
+      document.getElementById('left').style.display = 'block';
+    });
+    document.getElementById('sidebar_close').addEventListener('click', function() {
+      document.getElementById('left').style.display = 'none';
+    });
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 768) {
+        document.getElementById('left').style.display = 'block';
+      }
+      else {
+        document.getElementById('left').style.display = 'none';
+      }
+    });
+  </script>
 </body>
 
 </html>
